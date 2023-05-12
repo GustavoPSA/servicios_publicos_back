@@ -1,4 +1,4 @@
-package com.servicios_publicos.back.app.controllers;
+package com.servicios.publicos.back.app.controllers;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;

@@ -1,4 +1,4 @@
-package com.servicios_publicos.back.app;
+package com.servicios.publicos.back.app;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
