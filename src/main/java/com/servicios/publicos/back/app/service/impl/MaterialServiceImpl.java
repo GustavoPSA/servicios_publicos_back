@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.querydsl.core.types.Predicate;
 import com.servicios.publicos.back.app.domain.dto.MaterialDTO;
 import com.servicios.publicos.back.app.domain.mapper.MaterialMapper;
 import com.servicios.publicos.back.app.domain.models.Material;
@@ -24,9 +25,9 @@ public class MaterialServiceImpl implements IMaterialService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<MaterialDTO> listar() {
+	public List<MaterialDTO> listar(Predicate predicate) {
 
-		List<Material> materiales = materialRepository.findAll();
+		List<Material> materiales = (List<Material>) materialRepository.findAll(predicate);
 
 		List<MaterialDTO> materialesDTO = new ArrayList<>();
 
