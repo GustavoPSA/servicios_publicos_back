@@ -1,7 +1,7 @@
 package com.servicios.publicos.back.app.service.impl;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,6 +11,8 @@ import com.querydsl.core.types.Predicate;
 import com.servicios.publicos.back.app.domain.dto.MaterialDTO;
 import com.servicios.publicos.back.app.domain.mapper.MaterialMapper;
 import com.servicios.publicos.back.app.domain.models.Material;
+import com.servicios.publicos.back.app.exception.BackendException;
+import com.servicios.publicos.back.app.exception.NotFoundException;
 import com.servicios.publicos.back.app.repository.MaterialRepository;
 import com.servicios.publicos.back.app.service.IMaterialService;
 
@@ -29,49 +31,54 @@ public class MaterialServiceImpl implements IMaterialService {
 
 		List<Material> materiales = (List<Material>) materialRepository.findAll(predicate);
 
-		List<MaterialDTO> materialesDTO = new ArrayList<>();
-
-		if (!materiales.isEmpty()) {
-			materialesDTO = materialMapper.toListDTO(materiales);
+		if (materiales.isEmpty()) {
+			throw new NotFoundException("No se encontraron resultados");
 		}
 
-		return materialesDTO;
+		return materialMapper.toListDTO(materiales);
 	}
 
 	@Override
 	@Transactional(readOnly = true)
 	public MaterialDTO listarId(int idMaterial) {
 		// TODO Auto-generated method stub
-		return materialMapper.entityToDto(materialRepository.findById(idMaterial).get());
+		Optional<Material> materialOptional = materialRepository.findById(idMaterial);
+
+		if (!materialOptional.isPresent()) {
+			throw new NotFoundException("No se encontraro el material con ID: " + idMaterial);
+		}
+
+		return materialMapper.entityToDto(materialOptional.get());
 	}
 
 	@Override
 	@Transactional(readOnly = false)
 	public MaterialDTO add(MaterialDTO materialDto) {
 
-		Material material = materialMapper.dtoToEntity(materialDto);
-
-		Material materialResponse = materialRepository.save(material);
-
+		validarFechas(materialDto);
 		// TODO Auto-generated method stub
-		return materialMapper.entityToDto(materialResponse);
+		return materialMapper.entityToDto(materialRepository.save(materialMapper.dtoToEntity(materialDto)));
 	}
 
 	@Transactional
 	@Override
 	public MaterialDTO edit(MaterialDTO materialDto) {
 		// TODO Auto-generated method stub
-		Material material = materialMapper.dtoToEntity(materialDto);
 
-		if (materialRepository.existsById(material.getIdMaterial())) {
+		validarFechas(materialDto);
 
-			Material materialResponse = materialRepository.save(material);
-
-			return materialMapper.entityToDto(materialResponse);
-		} else {
-			MaterialDTO materialResponse = null;
-			return materialResponse;
+		if (!materialRepository.existsById(materialDto.getIdMaterial())) {
+			throw new NotFoundException("No se encontraro el material con ID: " + materialDto.getIdMaterial());
 		}
 
+		return materialMapper.entityToDto(materialRepository.save(materialMapper.dtoToEntity(materialDto)));
+
+	}
+
+	private void validarFechas(MaterialDTO materialDto) {
+
+		if (materialDto.getFechaCompra().compareTo(materialDto.getFechaVenta()) > 0) {
+			throw new BackendException("La fecha de Compra no debe ser mayor a la fecha de Venta");
+		}
 	}
 }

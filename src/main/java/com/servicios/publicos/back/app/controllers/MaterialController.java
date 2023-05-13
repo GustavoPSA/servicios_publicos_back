@@ -3,6 +3,8 @@ package com.servicios.publicos.back.app.controllers;
 import java.util.Date;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -46,13 +48,13 @@ public class MaterialController {
 	}
 
 	@PostMapping
-	public ResponseEntity<MaterialDTO> agregar(@RequestBody MaterialDTO materialDto) {
+	public ResponseEntity<MaterialDTO> agregar(@RequestBody @Valid MaterialDTO materialDto) {
 
 		return ResponseEntity.ok(service.add(materialDto));
 	}
 
 	@PutMapping
-	public ResponseEntity<MaterialDTO> editar(@RequestBody MaterialDTO materialDto) {
+	public ResponseEntity<MaterialDTO> editar(@RequestBody @Valid MaterialDTO materialDto) {
 
 		return ResponseEntity.ok(service.edit(materialDto));
 	}
