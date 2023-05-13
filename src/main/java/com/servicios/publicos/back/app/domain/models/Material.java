@@ -15,6 +15,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
@@ -53,9 +55,11 @@ public class Material implements Serializable {
 	@Column(name = "precio")
 	private double precio;
 
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Column(name = "fecha_compra")
 	private Date fechaCompra;
 
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Column(name = "fecha_venta")
 	private Date fechaVenta;
 
