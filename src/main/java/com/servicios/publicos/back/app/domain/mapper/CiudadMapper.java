@@ -8,7 +8,7 @@ import com.servicios.publicos.back.app.domain.models.Ciudad;
 @Mapper(componentModel = "spring")
 public interface CiudadMapper {
 
-	Ciudad ciudadDtoToCiudad(CiudadDTO ciudadDTO);
+	Ciudad dtoToEntity(CiudadDTO ciudadDTO);
 
-	CiudadDTO ciudadToCiudadDTO(Ciudad ciudad);
+	CiudadDTO entityToDto(Ciudad ciudad);
 }

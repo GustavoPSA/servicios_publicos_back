@@ -8,7 +8,7 @@ import com.servicios.publicos.back.app.domain.models.Estado;
 @Mapper(componentModel = "spring")
 public interface EstadoMapper {
 
-	Estado estadoDtoToEstado(EstadoDTO estadoDTO);
+	Estado dtoToEntity(EstadoDTO estadoDTO);
 
-	EstadoDTO estadoToEstadoDTO(Estado estado);
+	EstadoDTO entityToDto(Estado estado);
 }

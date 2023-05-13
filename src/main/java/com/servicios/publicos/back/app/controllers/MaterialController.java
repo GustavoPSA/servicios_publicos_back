@@ -12,14 +12,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.servicios.publicos.back.app.domain.dto.MaterialDTO;
-import com.servicios.publicos.back.app.service.MaterialService;
+import com.servicios.publicos.back.app.service.IMaterialService;
 
 @RestController
 @RequestMapping("/materiales")
 public class MaterialController {
 
 	@Autowired
-	private MaterialService service;
+	private IMaterialService service;
 
 	@GetMapping
 	public ResponseEntity<List<MaterialDTO>> listar() {
