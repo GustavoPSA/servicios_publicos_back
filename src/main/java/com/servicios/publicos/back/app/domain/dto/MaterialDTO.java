@@ -3,6 +3,7 @@ package com.servicios.publicos.back.app.domain.dto;
 import java.util.Date;
 import java.util.List;
 
+import com.servicios.publicos.back.app.domain.models.Ciudad;
 import com.servicios.publicos.back.app.domain.models.Estado;
 
 import lombok.AllArgsConstructor;
@@ -34,6 +35,6 @@ public class MaterialDTO {
 
 	private Estado estado;
 
-	private List<MaterialCiudadDTO> materialCiudadList;
+	private List<Ciudad> ciudades;
 
 }

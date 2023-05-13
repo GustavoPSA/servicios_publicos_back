@@ -2,6 +2,7 @@ package com.servicios.publicos.back.app.domain.models;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,8 +10,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -57,5 +62,10 @@ public class Material implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "id_estado")
 	private Estado estado;
+
+	@JsonIgnore
+	@ManyToMany
+	@JoinTable(name = "material_ciudad", joinColumns = @JoinColumn(name = "id_material"), inverseJoinColumns = @JoinColumn(name = "id_ciudad"))
+	private List<Ciudad> ciudades;
 
 }
