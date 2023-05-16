@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.servicios.publicos.back.app.domain.models.Material;
 
 import lombok.AllArgsConstructor;
@@ -22,5 +23,6 @@ public class CiudadDTO {
 
 	private int indActivo;
 
+	@JsonIgnore
 	private List<Material> materiales;
 }
