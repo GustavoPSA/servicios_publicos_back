@@ -27,12 +27,12 @@ public class MaterialServiceImpl implements IMaterialService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<MaterialDTO> listar(Predicate predicate) {
+	public List<MaterialDTO> list(Predicate predicate) {
 
 		List<Material> materiales = (List<Material>) materialRepository.findAll(predicate);
 
 		if (materiales.isEmpty()) {
-			throw new NotFoundException("No se encontraron resultados");
+			throw new NotFoundException("No se encontraron materiales");
 		}
 
 		return materialMapper.toListDTO(materiales);
@@ -40,12 +40,12 @@ public class MaterialServiceImpl implements IMaterialService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public MaterialDTO listarId(int idMaterial) {
+	public MaterialDTO getById(int idMaterial) {
 		// TODO Auto-generated method stub
 		Optional<Material> materialOptional = materialRepository.findById(idMaterial);
 
 		if (!materialOptional.isPresent()) {
-			throw new NotFoundException("No se encontraro el material con ID: " + idMaterial);
+			throw new NotFoundException("No se encontro el material con ID: " + idMaterial);
 		}
 
 		return materialMapper.entityToDto(materialOptional.get());
@@ -68,7 +68,7 @@ public class MaterialServiceImpl implements IMaterialService {
 		validarFechas(materialDto);
 
 		if (!materialRepository.existsById(materialDto.getIdMaterial())) {
-			throw new NotFoundException("No se encontraro el material con ID: " + materialDto.getIdMaterial());
+			throw new NotFoundException("No se encontro el material con ID: " + materialDto.getIdMaterial());
 		}
 
 		return materialMapper.entityToDto(materialRepository.save(materialMapper.dtoToEntity(materialDto)));

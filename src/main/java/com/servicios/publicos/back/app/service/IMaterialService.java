@@ -7,9 +7,9 @@ import com.servicios.publicos.back.app.domain.dto.MaterialDTO;
 
 public interface IMaterialService {
 
-	public List<MaterialDTO> listar(Predicate predicate);
+	public List<MaterialDTO> list(Predicate predicate);
 
-	public MaterialDTO listarId(int idMaterial);
+	public MaterialDTO getById(int idMaterial);
 
 	public MaterialDTO add(MaterialDTO materialDto);
 
